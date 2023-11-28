@@ -18,7 +18,7 @@ namespace MyGame
 
         public Character Player => _player;
 
-        /// Timeframe Calculation Properties
+        
         private Time _time;
 
 
@@ -31,30 +31,28 @@ namespace MyGame
             var newEnemies = Enemyfactory.CreateEnemies(EnemyType.Slow);
             GameObjectsList.AddRange(newEnemies);
             bulletPool = new BulletPool();
-
-            // Puedes repetir con diferentes tipos de enemigos si es necesario
+            GameManager.Instance.AddScoreObserver(_player);
+            
         }
         public void Update()
         {
-            // Actualizar DeltaTime
+            
             Time.Update();
-
-            // Incrementar el temporizador de generación de enemigos
             enemySpawnTimer += Time.DeltaTime;
 
-            // Verificar si es hora de generar nuevos enemigos
+            
             if (enemySpawnTimer >= enemySpawnInterval)
             {
-                var newEnemies = Enemyfactory.CreateEnemies(EnemyType.Slow); // o el tipo que prefieras
+                var newEnemies = Enemyfactory.CreateEnemies(EnemyType.Slow); 
                 GameObjectsList.AddRange(newEnemies);
 
-                enemySpawnTimer = 0f; // Reiniciar el temporizador
+                enemySpawnTimer = 0f; 
             }
 
             _player.Update();
             bulletPool.Update();
 
-            // Actualizar todos los objetos del juego
+            
             for (int i = 0; i < GameObjectsList.Count; i++)
             {
                 GameObjectsList[i].Update();

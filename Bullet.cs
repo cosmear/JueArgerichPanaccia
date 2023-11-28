@@ -41,6 +41,7 @@ namespace MyGame
         {
             Move();
             CheckCollisions();
+            currentAnimation.Update();
 
         }
 
@@ -88,7 +89,7 @@ namespace MyGame
 
         public override void Render()
         {
-            Engine.Draw(currentAnimation.CurrentFrame, transform.Position.x, transform.Position.y);
+            Engine.Draw(currentAnimation.CurrentFrame, transform.Position.x + 25, transform.Position.y - 5);
         }
 
     }

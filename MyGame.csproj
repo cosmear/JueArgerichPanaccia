@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="IScoreObserver.cs" />
+    <Compile Include="IDestructible.cs" />
     <Compile Include="IPooleable.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="FastEnemy.cs" />
@@ -71,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="assets\arial.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

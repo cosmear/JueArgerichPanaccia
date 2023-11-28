@@ -9,11 +9,13 @@ class Engine
 {
     static IntPtr screen;
     static int ancho, alto;
+    public static int ScreenHeight => alto;
+    public static int ScreenWidth => ancho;
 
     public static void Initialize()
     {
         ancho = 1024;
-        alto = 768;
+        alto = 1024;
         int colores = 24;
 
         int flags = (Sdl.SDL_HWSURFACE | Sdl.SDL_DOUBLEBUF | Sdl.SDL_ANYFORMAT);

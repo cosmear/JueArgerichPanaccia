@@ -23,6 +23,9 @@ namespace MyGame
         private int score;
         public event Action<int> OnEnemyTouchedBorder;
         public event Action<int> OnScoreChanged;
+        private List<IScoreObserver> scoreObservers = new List<IScoreObserver>();
+       // public static Font scoreFont;
+
 
         public static GameManager Instance
         {
@@ -37,13 +40,18 @@ namespace MyGame
             }
         }
 
-
+        public class Font
+        {
+            // Font class implementation
+        }
         public void Initialize()
         {
             Engine.Initialize();
             levelController = new LevelController();
             levelController.Initialization();
             OnEnemyTouchedBorder += AddScore;
+           
+           // scoreFont = new Font("assets/arial.ttf", 20);
         }
         public void Update()
         {
@@ -59,10 +67,10 @@ namespace MyGame
                     levelController.Update();
                     break;
                 case GameStatus.victory:
-                    //  Program.Update();
+                    
                     break;
                 case GameStatus.defeat:
-                    //   Program.Update();
+                    
                     break;
             }
 
@@ -72,16 +80,28 @@ namespace MyGame
         {
             gameStatus = gs;
         }
+        public void AddScoreObserver(IScoreObserver observer)
+        {
+            scoreObservers.Add(observer);
+        }
         private void AddScore(int points)
         {
             score += points;
-            // Aquí puedes actualizar la interfaz de usuario con el nuevo puntaje
             Console.WriteLine($"Puntos actuales: {score}");
-            OnScoreChanged?.Invoke(score);
+
+            foreach (var observer in scoreObservers)
+            {
+                observer.OnScoreChange(score);
+            }
+            if (score >= 1000)
+            {
+                ChangeGameStatus(GameStatus.victory);
+            }
         }
+
         public void EnemyTouchedBorder()
         {
-            OnEnemyTouchedBorder?.Invoke(10); // Invocar el evento aquí
+            OnEnemyTouchedBorder?.Invoke(10); 
         }
         public void Render()
         {
@@ -103,6 +123,12 @@ namespace MyGame
             }
             Engine.Show();
         }
+        //private void DrawScore()
+        //{
+            
+        //    Engine.DrawText($"Puntaje: {score}", 280, 20, 8, 4, 4, GameManager.scoreFont);
+        //}
     }
+    
 }
 

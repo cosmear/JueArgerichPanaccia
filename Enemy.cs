@@ -36,6 +36,7 @@ namespace MyGame
         {
             MoveEnemy();
             CheckCollisions();
+            currentAnimation.Update();
 
         }
 
@@ -50,40 +51,36 @@ namespace MyGame
             if (HasTouchedBottomBorder())
             {
                 GameManager.Instance.EnemyTouchedBorder();
-                DestroyEnemy();
+                GetDamage();
             }
         
     }
         private bool HasTouchedBottomBorder()
         {
-            float screenHeight = 768; // Asegúrate de que este método obtiene la altura de la pantalla correctamente
+            float screenHeight = 1024; 
             return transform.Position.y + transform.Scale.y >= screenHeight;
         }
 
         private void CheckCollisions()
         {
-            // Obtener las distancias centradas
-            float distanceX = Math.Abs((player.Transform.Position.x + (player.Transform.Scale.x / 2)) - (transform.Position.x + (transform.Scale.x / 2)));
+
+           
+            float distanceX = Math.Abs((player.Transform.Position.x + (player.Transform.Scale.x - 15)) - (transform.Position.x + (transform.Scale.x / 2)));
             float distanceY = Math.Abs((player.Transform.Position.y + (player.Transform.Scale.y / 2)) - (transform.Position.y + (transform.Scale.y / 2)));
 
-            // Calcular las sumas de las mitades de las anchuras y alturas, pero reducidas
-            float collisionReductionFactor = 0.5f; // Ajusta este valor para cambiar el tamaño de la colisión
+            
+            float collisionReductionFactor = 0.9f; 
             float sumHalfWidth = (player.Transform.Scale.x / 2 + transform.Scale.x / 2) * collisionReductionFactor;
-            float sumHalfHeight = (player.Transform.Scale.y / 2 + transform.Scale.y / 2) * collisionReductionFactor;
+            float sumHalfHeight = (player.Transform.Scale.y / 3 + transform.Scale.y / 2) * collisionReductionFactor;
 
-            // Verificar colisión
-            if (distanceX < sumHalfWidth && distanceY < sumHalfHeight)
+            
+            if (distanceX < sumHalfWidth && distanceY < sumHalfHeight )
             {
-                player.dead();
+                (player as IDestructible).Dead();
             }
         }
 
-        private void DestroyEnemy()
-        {
-            
-            GameManager.Instance.LevelController.GameObjectsList.Remove(this);
-            
-        }
+       
 
 
         public override void Render()
