@@ -24,7 +24,7 @@ namespace MyGame
         public event Action<int> OnEnemyTouchedBorder;
         public event Action<int> OnScoreChanged;
         private List<IScoreObserver> scoreObservers = new List<IScoreObserver>();
-       // public static Font scoreFont;
+        public static IntPtr scoreFont;
 
 
         public static GameManager Instance
@@ -40,18 +40,16 @@ namespace MyGame
             }
         }
 
-        public class Font
-        {
-            // Font class implementation
-        }
+        
         public void Initialize()
         {
             Engine.Initialize();
             levelController = new LevelController();
             levelController.Initialization();
             OnEnemyTouchedBorder += AddScore;
-           
-           // scoreFont = new Font("assets/arial.ttf", 20);
+            scoreFont = Engine.LoadFont("assets/arial.ttf", 20);
+
+            
         }
         public void Update()
         {
@@ -103,6 +101,11 @@ namespace MyGame
         {
             OnEnemyTouchedBorder?.Invoke(10); 
         }
+        private void DrawScore()
+        {
+
+            Engine.DrawText($"Puntaje: {score}", 280, 20, 255, 255, 255, scoreFont);
+        }
         public void Render()
         {
             Engine.Clear();
@@ -113,6 +116,7 @@ namespace MyGame
                     break;
                 case GameStatus.level:
                     levelController.Render();
+                    DrawScore();
                     break;
                 case GameStatus.victory:
                     Engine.Draw(winScreen, 0, 0);
@@ -123,11 +127,7 @@ namespace MyGame
             }
             Engine.Show();
         }
-        //private void DrawScore()
-        //{
-            
-        //    Engine.DrawText($"Puntaje: {score}", 280, 20, 8, 4, 4, GameManager.scoreFont);
-        //}
+        
     }
     
 }

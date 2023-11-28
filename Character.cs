@@ -38,7 +38,7 @@ namespace MyGame
 
         public override void Update()
         {
-
+            currentAnimation.Update();
             Vector2 newPosition = transform.Position;
 
             if (Engine.KeyPress(Engine.KEY_LEFT))
