@@ -2,13 +2,11 @@
 
 class Font
 {
-    // Atributos
+    
 
     IntPtr pointer;
 
-    // Operaciones
-
-    /// Constructor a partir de un nombre de fichero y un tamaño
+    
     public Font(string fileName, short size)
     {
         Load(fileName, size);

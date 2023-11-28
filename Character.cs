@@ -96,7 +96,7 @@ namespace MyGame
         {
             
             speed *= 1.5f;
-            Console.WriteLine($"Valocidad Aumentada");
+            
         }
 
         public override void Render()

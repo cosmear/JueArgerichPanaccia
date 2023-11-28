@@ -85,7 +85,7 @@ namespace MyGame
         private void AddScore(int points)
         {
             score += points;
-            Console.WriteLine($"Puntos actuales: {score}");
+           
 
             foreach (var observer in scoreObservers)
             {
